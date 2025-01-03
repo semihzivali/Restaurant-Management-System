@@ -23,7 +23,7 @@ public class InsertUser {
             pst.executeUpdate();
             System.out.println("Successfully created.");
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(UserService.class.getName());
+            Logger lgr = Logger.getLogger(ReadUser.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }

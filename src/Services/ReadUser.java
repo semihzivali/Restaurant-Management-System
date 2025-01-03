@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserService {
+public class ReadUser {
 	
 	// Kullanıcı doğrulama işlemi
     public boolean checkUser(String username, String password) {
