@@ -25,7 +25,7 @@
       </Label>
       <TextField fx:id="manager_username" layoutX="231.0" layoutY="166.0" prefHeight="34.0" prefWidth="181.0" promptText="username" />
       <TextField fx:id="manager_password" layoutX="231.0" layoutY="223.0" prefHeight="34.0" prefWidth="181.0" promptText="password" />
-      <Button fx:id="manager_login_button" layoutX="276.0" layoutY="286.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="91.0" style="-fx-background-color: #FED700;" text="Login">
+      <Button fx:id="manager_login_button" layoutX="276.0" layoutY="286.0" mnemonicParsing="false" onAction="#checkLogin" prefHeight="34.0" prefWidth="91.0" style="-fx-background-color: #FED700;" text="Login">
          <font>
             <Font size="18.0" />
          </font>

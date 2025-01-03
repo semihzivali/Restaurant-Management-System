@@ -24,33 +24,4 @@ public class DataBaseConnection {
 		return connection;
 	}
 	
-	public static void writeToDatabase(String userName, String userPassword) {
-
-        String url = "jdbc:postgresql://localhost:5432/JavaProject";
-        String user = "postgres";
-        String password = "semih0902";
-
-        String name = userName;
-        String pass = userPassword;
-        String role = "manager";
-
-        // query
-        String query = "INSERT INTO \"Users\"(username, password, role) VALUES(?, ?, ?)";
-
-        try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement(query)) {
-
-            pst.setString(1, name);
-            pst.setString(2, pass);
-            pst.setString(3, role);
-            pst.executeUpdate();
-            System.out.println("Sucessfully created.");
-
-        } catch (SQLException ex) {
-
-            Logger lgr = Logger.getLogger(DataBaseConnection.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-        }
-
-    }
 }
