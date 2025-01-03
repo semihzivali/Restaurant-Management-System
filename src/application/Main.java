@@ -5,6 +5,8 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+import java.sql.Connection;
+import Models.DataBaseConnection;
 
 public class Main extends Application {
 
@@ -20,5 +22,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+        Connection connection = DataBaseConnection.getConnection();
+        if (connection != null) {
+            System.out.println("Veritabanı bağlantısı başarılı!");
+        } else {
+            System.out.println("Veritabanı bağlantısı başarısız.");
+        }
     }
+    
+    
 }
