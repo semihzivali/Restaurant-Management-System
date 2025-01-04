@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class InsertUser {
 
     // Kullanıcıyı veritabanına ekleyen metot
-    public void writeToDatabase(String userName, String userPassword, String userRole) {
+    public boolean writeToDatabase(String userName, String userPassword, String userRole) {
         String query = "INSERT INTO \"Users\"(username, password, role) VALUES(?, ?, ?)";
     //    String role = "manager"; // Burada role sabit olabilir ya da parametre olarak alınabilir.
 
@@ -21,10 +21,10 @@ public class InsertUser {
             pst.setString(2, userPassword);
             pst.setString(3, userRole);
             pst.executeUpdate();
-            System.out.println("Successfully created.");
+            return true;
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(ReadUser.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+            ex.printStackTrace();
+            return false;
         }
     }
 }

@@ -7,10 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
+import Utils.AlertHelper;
 
 public class WaiterLoginController {
 	
-	@FXML
+    @FXML
     private Button waiter_login_button;
     @FXML
     private TextField waiter_username;
@@ -18,10 +20,6 @@ public class WaiterLoginController {
     private TextField waiter_password;
     
     private ReadUser userService = new ReadUser();
-    
-    public void ManagerSignupController(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/ManagerSignup.fxml");
-    }
     
     @FXML
     private void checkLogin(ActionEvent event) {
@@ -33,16 +31,12 @@ public class WaiterLoginController {
         if (userService.checkUser(username, password)) {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
+            AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
             SceneManager.getInstance().changeScene("/Views/WaiterScreen.fxml");
-            // Burada sahne değiştirme veya başka bir işlem yapılabilir.
-            
-            // Başarı mesajı gösterme
-           // showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
         } else {
             // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme
             System.out.println("Invalid username or password.");
-            //showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
+            AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
     }
-
 }

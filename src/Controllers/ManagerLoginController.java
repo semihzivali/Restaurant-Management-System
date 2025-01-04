@@ -1,11 +1,13 @@
 package Controllers;
 
 import Services.ReadUser;
+import Utils.AlertHelper;
 import Models.DataBaseConnection;
 import application.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 
 public class ManagerLoginController {
@@ -36,14 +38,10 @@ public class ManagerLoginController {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
             SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
-            // Burada sahne değiştirme veya başka bir işlem yapılabilir.
-            
-            // Başarı mesajı gösterme
-           // showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
         } else {
             // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme
             System.out.println("Invalid username or password.");
-            //showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
+            AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
     }
 

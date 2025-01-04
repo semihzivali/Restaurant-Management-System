@@ -11,13 +11,11 @@ import javafx.scene.control.Button;
 public class ManagerScreenController {
 	
 	@FXML
-    private Button waiter_add_button;
+    private Button add_employee_button;
 	@FXML
-    private Button waiter_remove_button;
+    private Button remove_employee_button;
 	@FXML
-    private Button kitchen_add_button;
-	@FXML
-    private Button kitchen_remove_button;
+    private Button manage_menu_button;
 	@FXML
     private Button show_tables;
 	@FXML
@@ -27,17 +25,14 @@ public class ManagerScreenController {
     private ReadUser userService = new ReadUser();
   
     
-    public void addWaiter(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/AddWaiterScreen.fxml");
+    public void addEmployee(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/AddEmployee.fxml");
     }
-    public void removeWaiter(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/RemoveWaiterScreen.fxml");
+    public void removeEmployee(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/RemoveEmployee.fxml");
     }
-    public void addKitchen(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/AddKitchenScreen.fxml");
-    }
-    public void removeKitchen(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/RemoveKitchenScreen.fxml");
+    public void manageMenu(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManageMenuScreen.fxml");
     }
     public void showTables(ActionEvent event) {
         SceneManager.getInstance().changeScene("/Views/ManagerShowTables.fxml");
