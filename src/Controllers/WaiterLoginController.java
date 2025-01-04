@@ -31,7 +31,7 @@ public class WaiterLoginController {
         if (userService.checkUser(username, password)) {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
-            AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+   //         AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
             SceneManager.getInstance().changeScene("/Views/WaiterScreen.fxml");
         } else {
             // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme

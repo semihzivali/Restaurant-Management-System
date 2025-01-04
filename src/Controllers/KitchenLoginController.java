@@ -7,10 +7,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
+import Utils.AlertHelper;
 
 public class KitchenLoginController {
 	
-	@FXML
+    @FXML
     private Button kitchen_login_button;
     @FXML
     private TextField kitchen_username;
@@ -18,10 +20,6 @@ public class KitchenLoginController {
     private TextField kitchen_password;
     
     private ReadUser userService = new ReadUser();
-    
-    public void ManagerSignupController(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/ManagerSignup.fxml");
-    }
     
     @FXML
     private void checkLogin(ActionEvent event) {
@@ -33,16 +31,12 @@ public class KitchenLoginController {
         if (userService.checkUser(username, password)) {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
-            SceneManager.getInstance().changeScene("/Views/WaiterScreen.fxml");
-            // Burada sahne değiştirme veya başka bir işlem yapılabilir.
-            
-            // Başarı mesajı gösterme
-           // showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+   //         AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+            SceneManager.getInstance().changeScene("/Views/KitchenScreen.fxml");
         } else {
             // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme
             System.out.println("Invalid username or password.");
-            //showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
+            AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
     }
-
 }
