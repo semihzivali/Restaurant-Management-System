@@ -29,6 +29,5 @@ public class Main extends Application {
             System.out.println("Veritabanı bağlantısı başarısız.");
         }
     }
-    
-    
+        
 }
