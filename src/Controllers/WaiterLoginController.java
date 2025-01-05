@@ -15,6 +15,8 @@ public class WaiterLoginController {
     @FXML
     private Button waiter_login_button;
     @FXML
+    private Button back_button;
+    @FXML
     private TextField waiter_username;
     @FXML
     private TextField waiter_password;
@@ -38,5 +40,9 @@ public class WaiterLoginController {
             System.out.println("Invalid username or password.");
             AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/FirstScreen.fxml");
     }
 }

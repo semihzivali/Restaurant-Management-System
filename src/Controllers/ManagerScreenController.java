@@ -20,6 +20,8 @@ public class ManagerScreenController {
     private Button show_tables;
 	@FXML
     private Button manager_logout_button;
+	@FXML
+    private Button back_button;
 	
   
     private ReadUser userService = new ReadUser();
@@ -39,6 +41,10 @@ public class ManagerScreenController {
     }
     public void managerLogout(ActionEvent event) {
         SceneManager.getInstance().changeScene("/Views/FirstScreen.fxml");
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManagerLoginScreen.fxml");
     }
    
    

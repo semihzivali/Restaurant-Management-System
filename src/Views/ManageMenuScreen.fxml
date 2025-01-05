@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagerMenuController" 
+      alignment="CENTER" spacing="10" style="-fx-padding: 20;">
+    
+    <Label text="Menü Yönetimi" style="-fx-font-size: 20; -fx-font-weight: bold;" />
+    
+    <TableView fx:id="menuTable" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="idColumn" text="ID" prefWidth="50" />
+            <TableColumn fx:id="itemNameColumn" text="Ürün Adı" prefWidth="150" />
+            <TableColumn fx:id="priceColumn" text="Fiyat" prefWidth="100" />
+            <TableColumn fx:id="categoryColumn" text="Kategori ID" prefWidth="100" />
+            <TableColumn fx:id="stockQuantityColumn" text="Stok Adedi" prefWidth="100" />
+        </columns>
+    </TableView>
+    
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Ürün Adı:" />
+        <TextField fx:id="itemNameField" prefWidth="150" />
+        <Label text="Fiyat:" />
+        <TextField fx:id="priceField" prefWidth="100" />
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Kategori ID:" />
+        <TextField fx:id="categoryIdField" prefWidth="100" />
+        <Label text="Stok Adedi:" />
+        <TextField fx:id="stockQuantityField" prefWidth="100" />
+    </HBox>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="addButton" text="Ekle" />
+        <Button fx:id="updateButton" text="Güncelle" />
+        <Button fx:id="deleteButton" text="Sil" />
+    </HBox>
+</VBox>

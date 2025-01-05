@@ -14,6 +14,8 @@ public class ManagerSignupController {
 	
 	@FXML
     private Button manager_signup_button;
+	@FXML
+    private Button back_button;
     @FXML
     private TextField manager_username;
     @FXML
@@ -45,6 +47,10 @@ public class ManagerSignupController {
         } else {
             AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı eklenirken bir sorun oluştu.");
         }
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManagerLoginScreen.fxml");
     }
 	
 	

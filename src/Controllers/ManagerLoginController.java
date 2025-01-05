@@ -16,6 +16,8 @@ public class ManagerLoginController {
     private Button manager_signup_button;
 	@FXML
     private Button manager_login_button;
+	@FXML
+    private Button back_button;
     @FXML
     private TextField manager_username;
     @FXML
@@ -43,6 +45,10 @@ public class ManagerLoginController {
             System.out.println("Invalid username or password.");
             AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/FirstScreen.fxml");
     }
 
 }
