@@ -8,11 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert.AlertType;
 import Utils.AlertHelper;
+import application.SceneManager;
 
 public class AddController {
 
     @FXML
     private Button create_button;
+    @FXML
+    private Button back_button;
     @FXML
     private TextField username;
     @FXML
@@ -52,5 +55,9 @@ public class AddController {
         } else {
             AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı eklenirken bir sorun oluştu.");
         }
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
     }
 }

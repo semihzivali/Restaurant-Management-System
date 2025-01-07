@@ -17,6 +17,8 @@ public class RemoveController {
 	
 	@FXML
     private Button remove_button;
+	@FXML
+    private Button back_button;
     @FXML
     private TextField username;
     @FXML
@@ -47,6 +49,10 @@ public class RemoveController {
         // Alanları temizle
         username.clear();
         password.clear();
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
     }
  
 }

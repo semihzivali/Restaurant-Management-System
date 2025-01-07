@@ -37,5 +37,6 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Button fx:id="back_button" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #FED700;" text="Back" />
    </children>
 </Pane>
