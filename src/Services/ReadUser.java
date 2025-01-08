@@ -8,21 +8,22 @@ import java.sql.SQLException;
 
 public class ReadUser {
 	
-	// Kullanıcı doğrulama işlemi
-    public boolean checkUser(String username, String password, String role) {
-        String query = "SELECT * FROM \"Users\" WHERE username = ? AND password = ? AND role = ?";
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            stmt.setString(3, role);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next();  // Kullanıcı doğruysa true döner
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+	 public int getUserId(String username, String password, String role) {
+	        try (Connection connection = DataBaseConnection.getConnection()) {
+	            String query = "SELECT id FROM public.\"Users\" WHERE username = ? AND password = ? AND role = ?";
+	            PreparedStatement stmt = connection.prepareStatement(query);
+	            stmt.setString(1, username);
+	            stmt.setString(2, password);
+	            stmt.setString(3, role);
+	            
+	            ResultSet rs = stmt.executeQuery();
+	            if (rs.next()) {
+	                return rs.getInt("id");
+	            }
+	        } catch (Exception e) {
+	            System.out.println("Error fetching user ID: " + e.getMessage());
+	        }
+	        return -1; // Kullanıcı bulunamadığında
+	    }
 
 }

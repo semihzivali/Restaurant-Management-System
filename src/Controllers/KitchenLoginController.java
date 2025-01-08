@@ -30,7 +30,7 @@ public class KitchenLoginController {
         String password = kitchen_password.getText();
         
         // Veritabanında kullanıcıyı kontrol ediyoruz
-        if (userService.checkUser(username, password, "kitchen")) {
+        if (userService.getUserId(username, password, "kitchen") != -1) {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
    //         AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");

@@ -10,8 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import Utils.AlertHelper;
 
+// LoggedInUser sınıfını ekliyoruz
+import Models.User;
+
 public class WaiterLoginController {
-	
+    
     @FXML
     private Button waiter_login_button;
     @FXML
@@ -29,11 +32,17 @@ public class WaiterLoginController {
         String username = waiter_username.getText();
         String password = waiter_password.getText();
         
-        // Veritabanında kullanıcıyı kontrol ediyoruz
-        if (userService.checkUser(username, password, "waiter")) {
-            // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
-            System.out.println("Login successful!");
-   //         AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+        // Veritabanında kullanıcıyı kontrol ediyoruz ve ID'sini alıyoruz
+        int waiterId = userService.getUserId(username, password, "waiter");
+        
+        if (waiterId != -1) {
+            // Eğer kullanıcı doğruysa, ID'yi LoggedInUser'a kaydediyoruz
+            User.setWaiterId(waiterId);
+            
+            System.out.println("Login successful! User ID: " + waiterId);
+            AlertHelper.showAlert(AlertType.INFORMATION, "Login Successful", "Welcome, " + username + "!");
+            
+            // Ana sayfaya geçiş
             SceneManager.getInstance().changeScene("/Views/WaiterScreen.fxml");
         } else {
             // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme

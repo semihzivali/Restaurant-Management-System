@@ -1,6 +1,8 @@
 package Controllers;
 
 import Models.DataBaseConnection;
+import application.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -12,9 +14,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import Models.User;
 
 public class WaiterTableOrderController {
 
+	@FXML
+    private Button back_button;
     @FXML
     private ListView<String> ordersListView;  // Sipariş ListView
     @FXML
@@ -33,6 +38,7 @@ public class WaiterTableOrderController {
         if (connection != null) {
             System.out.println("Veritabanına bağlantı başarılı!");
             loadMenu();
+            loadOrdersForTable(WaiterScreenController.tableNum); // Örnek masa numarası
         } else {
             System.out.println("Veritabanına bağlantı kurulamadı!");
         }
@@ -70,6 +76,31 @@ public class WaiterTableOrderController {
             System.out.println("Menü yüklenirken hata oluştu: " + e.getMessage());
         }
     }
+    
+    @FXML
+    private void loadOrdersForTable(int tableNumber) {
+        try {
+        	//int tableNumber = WaiterScreenController.tableNum; 
+            String query = "SELECT items, quantities FROM public.\"Orders\" WHERE table_number = ?";
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, tableNumber);
+            ResultSet rs = stmt.executeQuery();
+
+            ordersListView.getItems().clear(); // Eski verileri temizle
+
+            while (rs.next()) {
+                String[] items = (String[]) rs.getArray("items").getArray();
+                Integer[] quantities = (Integer[]) rs.getArray("quantities").getArray();
+
+                for (int i = 0; i < items.length; i++) {
+                    ordersListView.getItems().add(quantities[i] + " x " + items[i]);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Siparişleri yüklerken hata oluştu: " + e.getMessage());
+        }
+    }
 
     // Miktar güncelleme işlemi
     private void updateQuantity(String itemName, Label quantityLabel, int change) {
@@ -91,19 +122,13 @@ public class WaiterTableOrderController {
         }
 
         try {
-            // Veritabanına bağlan
-            Connection connection = DataBaseConnection.getConnection();
-            
-            // Sipariş bilgilerini hazırlayın
-            int tableNumber = WaiterScreenController.tableNum; // Örnek olarak masa numarasını sabit verdim, UI'dan alınabilir
-            int waiterId = 1; // Örnek olarak garson ID'si sabit verdim, UI'dan alınabilir
-            String status = "Ready"; // Yeni sipariş durumu
+            int tableNumber = WaiterScreenController.tableNum; // Örnek masa numarası
+            int waiterId = User.getWaiterId();  // Örnek garson ID'si
+            String status = "Pending";
 
-            // `items` ve `quantities` dizilerini hazırlayın
             String[] items = orderQuantities.keySet().toArray(new String[0]);
             Integer[] quantities = orderQuantities.values().toArray(new Integer[0]);
 
-            // SQL INSERT komutunu hazırlayın
             String sql = "INSERT INTO public.\"Orders\" (table_number, status, waiter_id, quantities, items) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(sql);
 
@@ -116,8 +141,8 @@ public class WaiterTableOrderController {
             stmt.executeUpdate();
             System.out.println("Sipariş başarıyla kaydedildi!");
 
-            // Sol tarafta toplam siparişleri göster
-            ordersListView.getItems().add("Masa: " + tableNumber + " - Durum: " + status);
+            // Sol paneli güncelle
+            refreshOrdersList(tableNumber);
 
             // Siparişleri sıfırla
             orderQuantities.clear();
@@ -126,6 +151,10 @@ public class WaiterTableOrderController {
         } catch (SQLException e) {
             System.out.println("Sipariş eklerken hata oluştu: " + e.getMessage());
         }
+    }
+    
+    private void refreshOrdersList(int tableNumber) {
+        loadOrdersForTable(tableNumber); // Var olan metodu çağırarak listeyi yenile
     }
 
     // Menüdeki miktar etiketlerini sıfırla
@@ -150,4 +179,9 @@ public class WaiterTableOrderController {
             return false;
         }
     }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/WaiterScreen.fxml");
+    }
+    
 }

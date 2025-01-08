@@ -32,12 +32,12 @@ public class WaiterScreenController {
 
 	public void table1(ActionEvent event) {
 		tableNum = 1; // UI'dan alınan masa numarasını al
-		SceneManager.getInstance().changeScene("/Views/Waiter_page.fxml");
+		SceneManager.getInstance().changeScene("/Views/WaiterOrderScreen.fxml");
     }
 
     public void table2(ActionEvent event) {
     	tableNum = 2;
-        SceneManager.getInstance().changeScene("/Views/Waiter_page.fxml");
+        SceneManager.getInstance().changeScene("/Views/WaiterOrderScreen.fxml");
     }
 
     public void table3(ActionEvent event) {

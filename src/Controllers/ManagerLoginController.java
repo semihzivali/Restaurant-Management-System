@@ -36,7 +36,7 @@ public class ManagerLoginController {
         String password = manager_password.getText();
         
         // Veritabanında kullanıcıyı kontrol ediyoruz
-        if (userService.checkUser(username, password, "manager")) {
+    if (userService.getUserId(username, password, "manager") != -1) {
             // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
             System.out.println("Login successful!");
             SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
