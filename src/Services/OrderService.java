@@ -10,7 +10,7 @@ public class OrderService {
 
   
     public void createOrder(int tableNumber, String items, String status, int waiterId) {
-        Order order = new Order(tableNumber, items, "pending", waiterId); // id 0 çünkü yeni sipariş
+        Order order = new Order(tableNumber, items, "pending", waiterId);
         orderRepository.addOrder(order);
     }
 

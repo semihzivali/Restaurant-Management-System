@@ -39,11 +39,10 @@ public class WaiterTableOrderController {
     @FXML
     public void initialize() {
         if (connection != null) {
-            System.out.println("Veritabanına bağlantı başarılı!");
             loadMenu();                                                   // Loading Menu
             loadOrdersForTable(WaiterScreenController.tableNum); 
         } else {
-            System.out.println("Veritabanına bağlantı kurulamadı!");
+            System.out.println("Failed to connect to database!");
         }
     }
 
@@ -75,7 +74,7 @@ public class WaiterTableOrderController {
             }
 
         } catch (SQLException e) {
-            System.out.println("Menü yüklenirken hata oluştu: " + e.getMessage());
+            System.out.println("An error occurred while loading the menu: " + e.getMessage());
         }
     }
 
@@ -107,7 +106,7 @@ public class WaiterTableOrderController {
             totalPriceLabel.setText(String.format("Total: %.2f TL", totalPrice));
 
         } catch (SQLException e) {
-            System.out.println("Siparişleri yüklerken hata oluştu: " + e.getMessage());
+            System.out.println("An error occurred while loading the menu.: " + e.getMessage());
         }
     }
 
@@ -122,7 +121,7 @@ public class WaiterTableOrderController {
                 return rs.getDouble("price");
             }
         } catch (SQLException e) {
-            System.out.println("Ürün fiyatı alınırken hata oluştu: " + e.getMessage());
+            System.out.println("An error occurred while getting the product price.: " + e.getMessage());
         }
         return 0.0;
     }

@@ -29,7 +29,7 @@ public class RemoveController {
         String _password = password.getText();
 
         if (_username.isEmpty() || _password.isEmpty()) {
-            AlertHelper.showAlert(AlertType.WARNING, "Uyarı", "Kullanıcı adı ve şifre girin.");
+            AlertHelper.showAlert(AlertType.WARNING, "Warning", "Enter your username and password.");
             return;
         }
 
@@ -37,9 +37,9 @@ public class RemoveController {
         boolean success = userService.removeUser(_username, _password);
 
         if (success) {
-        	AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla silindi.");
+        	AlertHelper.showAlert(AlertType.INFORMATION, "Success", "User deleted successfully.");
         } else {
-        	AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı adı veya şifre hatalı.");
+        	AlertHelper.showAlert(AlertType.ERROR, "Error", "Username or password is incorrect.");
         }
 
         username.clear();

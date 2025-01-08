@@ -8,13 +8,10 @@ import Models.DataBaseConnection;
 
 public class OrderRepository {
 
-    private DataBaseConnection dbConnection = new DataBaseConnection();
-
-    // Sipariş eklemek
     public void addOrder(Order order) {
         String query = "INSERT INTO \"Orders\" (table_number, items, status, waiter_id) VALUES (?, ?, ?, ?)";
 
-        try (Connection con = dbConnection.getConnection();  // DataBaseConnection'ı kullanıyoruz
+        try (Connection con = DataBaseConnection.getConnection();  // DataBaseConnection
              PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setInt(1, order.getTableNumber());
@@ -35,7 +32,7 @@ public class OrderRepository {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM \"Orders\" WHERE table_number = ?";
 
-        try (Connection con = dbConnection.getConnection();  // We use the database connection class
+        try (Connection con = DataBaseConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setInt(1, tableNumber);
@@ -57,11 +54,10 @@ public class OrderRepository {
         return orders;
     }
 
-    // Siparişi güncellemek
     public void updateOrderStatus(int orderId, String status) {
         String query = "UPDATE \"Orders\" SET status = ? WHERE id = ?";
 
-        try (Connection con = dbConnection.getConnection();  // DataBaseConnection'ı kullanıyoruz
+        try (Connection con = DataBaseConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setString(1, status);

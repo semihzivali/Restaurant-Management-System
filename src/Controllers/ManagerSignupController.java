@@ -29,7 +29,7 @@ public class ManagerSignupController {
         String password = manager_password.getText();
 
         if (username.isEmpty() || password.isEmpty()) {
-            AlertHelper.showAlert(AlertType.WARNING, "Eksik Bilgi", "Tüm alanları doldurduğunuzdan emin olun.");
+            AlertHelper.showAlert(AlertType.WARNING, "Missing Information", "Make sure you fill in all fields.");
             return;
         }
 
@@ -37,12 +37,12 @@ public class ManagerSignupController {
         boolean success = userService.writeToDatabase(username, password, "manager");
 
         if (success) {
-            AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");
+            AlertHelper.showAlert(AlertType.INFORMATION, "Success", "User added successfully!");
             manager_username.clear();
             manager_password.clear();
       
         } else {
-            AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı eklenirken bir sorun oluştu.");
+            AlertHelper.showAlert(AlertType.ERROR, "Error", "There was a problem adding the user.");
         }
     }
     

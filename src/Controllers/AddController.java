@@ -38,7 +38,7 @@ public class AddController {
         String userType = select_user_type.getValue();
 
         if (user.isEmpty() || pass.isEmpty() || userType == null) {
-            AlertHelper.showAlert(AlertType.WARNING, "Eksik Bilgi", "Tüm alanları doldurduğunuzdan emin olun.");
+            AlertHelper.showAlert(AlertType.WARNING, "Missing Information", "Make sure you fill in all fields.");
             return;
         }
 
@@ -46,13 +46,13 @@ public class AddController {
         boolean success = userService.writeToDatabase(user, pass, userType);
 
         if (success) {
-            AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");
+            AlertHelper.showAlert(AlertType.INFORMATION, "Success", "User added successfully!");
             // Clear the textfields.
             username.clear();
             password.clear();
             select_user_type.getSelectionModel().clearSelection();
         } else {
-            AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı eklenirken bir sorun oluştu.");
+            AlertHelper.showAlert(AlertType.ERROR, "Error", "There was a problem adding the user.");
         }
     }
     

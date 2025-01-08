@@ -15,9 +15,6 @@ public class Order {
     }
 
     // Getters and Setters
-
-
-
     public int getTableNumber() {
         return tableNumber;
     }

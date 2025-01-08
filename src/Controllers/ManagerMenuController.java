@@ -54,24 +54,22 @@ public class ManagerMenuController {
     private final MenuService menuService = new MenuService();
     private ObservableList<Menu> menuData = FXCollections.observableArrayList();
 
-    private Menu selectedMenuForEdit; // Edit işleminde düzenlenen öğeyi takip eder
+    private Menu selectedMenuForEdit; // Keeps track of the edited item during the edit process
 
     @FXML
     public void initialize() {
-        // Sütunların bağlanması
+        // Connecting columns
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryId"));
         stockQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("stockQuantity"));
 
-        // Verilerin yüklenmesi
         loadMenuData();
 
-        // Action sütununun eklenmesi
         addActionButtons();
 
-        // Add butonuna tıklama işlemi
+        // Clicking on the Add button
         addButton.setOnAction(event -> {
             if (selectedMenuForEdit == null) {
                 addMenu();
@@ -118,12 +116,12 @@ public class ManagerMenuController {
     }
 
     private void populateFieldsForEdit(Menu menu) {
-        selectedMenuForEdit = menu; // Düzenlenecek öğeyi takip et
+        selectedMenuForEdit = menu; // Follow the item to be edited
         itemNameField.setText(menu.getItemName());
         priceField.setText(String.valueOf(menu.getPrice()));
         categoryIdField.setText(String.valueOf(menu.getCategoryId()));
         stockQuantityField.setText(String.valueOf(menu.getStockQuantity()));
-        addButton.setText("Update"); // Buton metnini değiştir
+        addButton.setText("Update"); // Change button text
     }
 
     private void addMenu() {
@@ -145,11 +143,11 @@ public class ManagerMenuController {
         selectedMenuForEdit.setCategoryId(Integer.parseInt(categoryIdField.getText()));
         selectedMenuForEdit.setStockQuantity(Integer.parseInt(stockQuantityField.getText()));
 
-        menuService.updateMenuItem(selectedMenuForEdit); // Veritabanında güncelle
+        menuService.updateMenuItem(selectedMenuForEdit); // Update in database
         clearFields();
         loadMenuData();
-        addButton.setText("Add"); // Butonu eski haline döndür
-        selectedMenuForEdit = null; // Edit işlemi tamamlandı
+        addButton.setText("Add");
+        selectedMenuForEdit = null; // Editing process completed
     }
 
     private void deleteMenu(Menu menu) {

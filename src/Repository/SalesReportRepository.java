@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SalesReportRepository {
 
-    // Satış raporlarını getiren metod
+    // Method that brings sales reports
     public List<SalesReport> getSalesReportData() {
         List<SalesReport> salesReports = new ArrayList<>();
         try (Connection conn = DataBaseConnection.getConnection()) {
@@ -36,7 +36,7 @@ public class SalesReportRepository {
         return salesReports;
     }
 
-    // Tüm garsonların toplam satışını hesaplayan metod
+    // Method to calculate total sales of all waiters
     public double getTotalSales() {
         double totalSales = 0;
         try (Connection conn = DataBaseConnection.getConnection()) {

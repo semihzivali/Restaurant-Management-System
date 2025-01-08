@@ -14,9 +14,9 @@ public class DataBaseConnection {
 		Connection connection = null;
 		try {
 			connection = DriverManager.getConnection(URL, USER, PASSWORD);
-			System.out.println("PostgreSQL bağlantısı başarılı!");
+			System.out.println("Database connection successful!");
 		} catch (SQLException e) {
-			System.out.println("Veritabanı bağlantısı başarısız: " + e.getMessage());
+			System.out.println("Database connection failed: " + e.getMessage());
 		}
 		return connection;
 	}

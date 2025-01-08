@@ -25,7 +25,7 @@ public class MenuRepository {
 	                    rs.getInt("category_id"),
 	                    rs.getInt("stock_quantity")
 	            );
-	            menu.setId(rs.getInt("id")); // ID'yi setId() ile ayarlıyoruz
+	            menu.setId(rs.getInt("id"));
 	            menuItems.add(menu);
 	        }
 	    } catch (Exception e) {
@@ -49,7 +49,7 @@ public class MenuRepository {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        menuItem.setId(generatedKeys.getInt(1)); // Yeni ID'yi al ve menüye ata
+                        menuItem.setId(generatedKeys.getInt(1));
                     }
                 }
             }
@@ -66,7 +66,7 @@ public class MenuRepository {
             stmt.setDouble(2, menuItem.getPrice());
             stmt.setInt(3, menuItem.getCategoryId());
             stmt.setInt(4, menuItem.getStockQuantity());
-            stmt.setInt(5, menuItem.getId()); // ID ile güncelleme
+            stmt.setInt(5, menuItem.getId()); 
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

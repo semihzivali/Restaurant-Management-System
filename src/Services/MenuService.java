@@ -9,7 +9,7 @@ public class MenuService {
     private final MenuRepository menuRepository;
 
     public MenuService() {
-        this.menuRepository = new MenuRepository(); // Direkt bağımlılık veya Dependency Injection kullanılabilir.
+        this.menuRepository = new MenuRepository();
     }
 
     public List<Menu> getAllMenuItems() {
@@ -17,7 +17,6 @@ public class MenuService {
     }
 
     public void addMenuItem(Menu menuItem) {
-        // İş mantığı (örneğin: fiyat kontrolü) eklenebilir
         if (menuItem.getPrice() > 0) {
             menuRepository.addMenuItem(menuItem);
         } else {

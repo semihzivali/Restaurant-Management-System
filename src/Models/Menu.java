@@ -16,7 +16,7 @@ public class Menu {
         this.stockQuantity = stockQuantity;
     }
 
-    // Getter ve Setter'lar
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -57,9 +57,4 @@ public class Menu {
         this.stockQuantity = stockQuantity;
     }
 
-    // Override toString (isteğe bağlı, TableView veya Debug için kullanışlıdır)
-    @Override
-    public String toString() {
-        return itemName + " (ID: " + id + ")";
-    }
 }
