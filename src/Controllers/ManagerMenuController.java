@@ -2,8 +2,10 @@ package Controllers;
 
 import Models.Menu;
 import Services.MenuService;
+import application.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -46,6 +48,8 @@ public class ManagerMenuController {
 
     @FXML
     private Button addButton;
+    @FXML
+    private Button back_button;
 
     private final MenuService menuService = new MenuService();
     private ObservableList<Menu> menuData = FXCollections.observableArrayList();
@@ -158,5 +162,9 @@ public class ManagerMenuController {
         priceField.clear();
         categoryIdField.clear();
         stockQuantityField.clear();
+    }
+    
+    public void back(ActionEvent event) {
+        SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
     }
 }

@@ -37,7 +37,7 @@ public class ManagerScreenController {
         SceneManager.getInstance().changeScene("/Views/ManageMenuScreen.fxml");
     }
     public void showTables(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/ManagerShowTables.fxml");
+        SceneManager.getInstance().changeScene("/Views/ManagerOrderData.fxml");
     }
     public void managerLogout(ActionEvent event) {
         SceneManager.getInstance().changeScene("/Views/FirstScreen.fxml");

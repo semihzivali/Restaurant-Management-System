@@ -35,5 +35,6 @@
     </HBox>
 
     <Button fx:id="addButton" text="Add" />
+   <Button fx:id="back_button" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #FED700;" text="Back" />
 
 </VBox>

@@ -22,7 +22,5 @@ public class FirstScreenController {
         SceneManager.getInstance().changeScene("/Views/WaiterLoginScreen.fxml");
     }
 
-    public void KitchenLoginController(ActionEvent event) {
-        SceneManager.getInstance().changeScene("/Views/KitchenLoginScreen.fxml");
-    }
+  
 }

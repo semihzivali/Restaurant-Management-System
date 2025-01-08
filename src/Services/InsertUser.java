@@ -12,7 +12,6 @@ public class InsertUser {
     // Kullanıcıyı veritabanına ekleyen metot
     public boolean writeToDatabase(String userName, String userPassword, String userRole) {
         String query = "INSERT INTO \"Users\"(username, password, role) VALUES(?, ?, ?)";
-    //    String role = "manager"; // Burada role sabit olabilir ya da parametre olarak alınabilir.
 
         try (Connection con = DataBaseConnection.getConnection();
              PreparedStatement pst = con.prepareStatement(query)) {
