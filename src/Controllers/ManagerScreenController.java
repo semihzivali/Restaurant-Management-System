@@ -1,11 +1,8 @@
 package Controllers;
 
-import Services.ReadUser;
-import Models.DataBaseConnection;
 import application.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 
 public class ManagerScreenController {
@@ -23,8 +20,6 @@ public class ManagerScreenController {
 	@FXML
     private Button back_button;
 	
-  
-    private ReadUser userService = new ReadUser();
   
     
     public void addEmployee(ActionEvent event) {

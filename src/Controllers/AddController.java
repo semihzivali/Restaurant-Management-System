@@ -1,6 +1,6 @@
 package Controllers;
 
-import Services.InsertUser;
+import Services.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -23,7 +23,7 @@ public class AddController {
     @FXML
     private ComboBox<String> select_user_type;
 
-    private InsertUser insertUser = new InsertUser();
+    private UserService userService= new UserService();
 
     @FXML
     public void initialize() {
@@ -44,7 +44,7 @@ public class AddController {
         }
 
         // Veritabanına ekleme
-        boolean success = insertUser.writeToDatabase(user, pass, userType);
+        boolean success = userService.writeToDatabase(user, pass, userType);
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");

@@ -1,7 +1,6 @@
 package Controllers;
 
-import Models.DataBaseConnection;
-import Services.InsertUser;
+import Services.UserService;
 import Utils.AlertHelper;
 import application.SceneManager;
 import javafx.event.ActionEvent;
@@ -21,7 +20,7 @@ public class ManagerSignupController {
     @FXML
     private TextField manager_password;
     
-    private InsertUser insertUser = new InsertUser();
+    private UserService userService= new UserService();
     
     
     @FXML
@@ -36,7 +35,7 @@ public class ManagerSignupController {
         }
 
         // Veritabanına ekleme
-        boolean success = insertUser.writeToDatabase(username, password, "manager");
+        boolean success = userService.writeToDatabase(username, password, "manager");
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");

@@ -11,8 +11,7 @@ public class FirstScreenController {
     private Button managerButton;
     @FXML
     private Button waiterButton;
-    @FXML
-    private Button kitchenButton;
+    
 
     public void ManagerLoginController(ActionEvent event) {
         SceneManager.getInstance().changeScene("/Views/ManagerLoginScreen.fxml");

@@ -1,16 +1,12 @@
 package Controllers;
 
 import Utils.AlertHelper;
-import Models.DataBaseConnection;
-import Services.DeleteUser;
-import Services.InsertUser;
+import Services.UserService;
 import application.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class RemoveController {
@@ -24,7 +20,7 @@ public class RemoveController {
     @FXML
     private TextField password;
     
-    DeleteUser deleteUser = new DeleteUser();
+    private UserService userService= new UserService();
     
     @FXML
     private void deleteData() {
@@ -38,7 +34,7 @@ public class RemoveController {
         }
 
         // Kullanıcıyı silme işlemi
-        boolean success = deleteUser.removeUser(_username, _password);
+        boolean success = userService.removeUser(_username, _password);
 
         if (success) {
         	AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla silindi.");

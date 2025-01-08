@@ -1,7 +1,6 @@
 package Controllers;
 
-import Services.ReadUser;
-import Models.DataBaseConnection;
+import Services.UserService;
 import application.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,8 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import Utils.AlertHelper;
-
-// LoggedInUser sınıfını ekliyoruz
 import Models.User;
 
 public class WaiterLoginController {
@@ -24,7 +21,7 @@ public class WaiterLoginController {
     @FXML
     private TextField waiter_password;
     
-    private ReadUser userService = new ReadUser();
+    private UserService userService= new UserService();
     
     @FXML
     private void checkLogin(ActionEvent event) {
