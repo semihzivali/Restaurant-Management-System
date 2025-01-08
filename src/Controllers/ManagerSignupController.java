@@ -28,18 +28,16 @@ public class ManagerSignupController {
         String username = manager_username.getText();
         String password = manager_password.getText();
 
-        // Form kontrolü
         if (username.isEmpty() || password.isEmpty()) {
             AlertHelper.showAlert(AlertType.WARNING, "Eksik Bilgi", "Tüm alanları doldurduğunuzdan emin olun.");
             return;
         }
 
-        // Veritabanına ekleme
+        // Insert the database.
         boolean success = userService.writeToDatabase(username, password, "manager");
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");
-            // Alanları temizle
             manager_username.clear();
             manager_password.clear();
       

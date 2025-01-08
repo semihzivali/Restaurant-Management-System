@@ -27,7 +27,7 @@ public class AddController {
 
     @FXML
     public void initialize() {
-        // ComboBox'a seçenekleri ekleyin
+        // Add options to ComboBox
         select_user_type.getItems().addAll("waiter", "kitchen");
     }
 
@@ -37,18 +37,17 @@ public class AddController {
         String pass = password.getText();
         String userType = select_user_type.getValue();
 
-        // Form kontrolü
         if (user.isEmpty() || pass.isEmpty() || userType == null) {
             AlertHelper.showAlert(AlertType.WARNING, "Eksik Bilgi", "Tüm alanları doldurduğunuzdan emin olun.");
             return;
         }
 
-        // Veritabanına ekleme
+        // Insert the database.
         boolean success = userService.writeToDatabase(user, pass, userType);
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Başarılı", "Kullanıcı başarıyla eklendi!");
-            // Alanları temizle
+            // Clear the textfields.
             username.clear();
             password.clear();
             select_user_type.getSelectionModel().clearSelection();

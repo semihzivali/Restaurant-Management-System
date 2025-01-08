@@ -22,13 +22,13 @@ public class WaiterTableOrderController {
     @FXML
     private Button closeTableButton;
     @FXML
-    private ListView<String> ordersListView;  // Sipariş ListView
+    private ListView<String> ordersListView;  // Oerders ListView
     @FXML
-    private VBox menuBox;                    // Menü ürünlerinin olduğu VBox
+    private VBox menuBox;                    // VBox with menu items
     @FXML
-    private Label totalPriceLabel;           // Toplam fiyat göstergesi
+    private Label totalPriceLabel;           // Total price
 
-    private Map<String, Integer> orderQuantities = new HashMap<>(); // Ürün miktarlarını tutan harita
+    private Map<String, Integer> orderQuantities = new HashMap<>(); // Map that holds product quantities
 
     private Connection connection;
 
@@ -40,14 +40,14 @@ public class WaiterTableOrderController {
     public void initialize() {
         if (connection != null) {
             System.out.println("Veritabanına bağlantı başarılı!");
-            loadMenu();
-            loadOrdersForTable(WaiterScreenController.tableNum); // Örnek masa numarası
+            loadMenu();                                                   // Loading Menu
+            loadOrdersForTable(WaiterScreenController.tableNum); 
         } else {
             System.out.println("Veritabanına bağlantı kurulamadı!");
         }
     }
 
-    // Menüdeki ürünleri yükle
+    // Load the menu
     private void loadMenu() {
         try {
             String query = "SELECT id, item_name, price FROM public.\"Menu\"";
@@ -58,7 +58,6 @@ public class WaiterTableOrderController {
                 String itemName = rs.getString("item_name");
                 double itemPrice = rs.getDouble("price");
 
-                // Menüdeki her ürün için HBox oluştur
                 HBox itemHBox = new HBox(10);
 
                 Label itemLabel = new Label(itemName + " - " + itemPrice + " TL");
@@ -66,11 +65,11 @@ public class WaiterTableOrderController {
                 Label quantityLabel = new Label("0");
                 Button plusButton = new Button("+");
 
-                // Buton işlevleri
+                // Button functions
                 minusButton.setOnAction(event -> updateQuantity(itemName, quantityLabel, -1));
                 plusButton.setOnAction(event -> updateQuantity(itemName, quantityLabel, 1));
 
-                // HBox içine ekle
+                // Add to HBox
                 itemHBox.getChildren().addAll(itemLabel, minusButton, quantityLabel, plusButton);
                 menuBox.getChildren().add(itemHBox);
             }
@@ -88,24 +87,23 @@ public class WaiterTableOrderController {
             stmt.setInt(1, tableNumber);
             ResultSet rs = stmt.executeQuery();
 
-            ordersListView.getItems().clear(); // Eski verileri temizle
-            double totalPrice = 0.0; // Toplam fiyat
+            ordersListView.getItems().clear(); // Clear the previous data
+            double totalPrice = 0.0; // Total price
 
             while (rs.next()) {
                 String[] items = (String[]) rs.getArray("items").getArray();
                 Integer[] quantities = (Integer[]) rs.getArray("quantities").getArray();
 
                 for (int i = 0; i < items.length; i++) {
-                    // Siparişleri listeye ekle
+                    // Add orders to list
                     ordersListView.getItems().add(quantities[i] + " x " + items[i]);
 
-                    // Ürün fiyatını al ve toplam fiyata ekle
+                    // Get the product price and add it to the total price
                     double itemPrice = getItemPrice(items[i]);
                     totalPrice += quantities[i] * itemPrice;
                 }
             }
 
-            // Toplam fiyat etiketini güncelle
             totalPriceLabel.setText(String.format("Total: %.2f TL", totalPrice));
 
         } catch (SQLException e) {
@@ -113,7 +111,7 @@ public class WaiterTableOrderController {
         }
     }
 
-    // Veritabanından ürün fiyatını al
+    // Get product price from database
     private double getItemPrice(String itemName) {
         try {
             String query = "SELECT price FROM public.\"Menu\" WHERE item_name = ?";
@@ -129,28 +127,28 @@ public class WaiterTableOrderController {
         return 0.0;
     }
 
-    // Miktar güncelleme işlemi
+    // Update the quantity
     private void updateQuantity(String itemName, Label quantityLabel, int change) {
         int currentQuantity = orderQuantities.getOrDefault(itemName, 0);
         int newQuantity = currentQuantity + change;
 
         if (newQuantity >= 0) {
             orderQuantities.put(itemName, newQuantity);
-            quantityLabel.setText(String.valueOf(newQuantity)); // Ekrandaki miktarı güncelle
-            System.out.println(itemName + " miktarı: " + newQuantity); // Konsola yazdır
+            quantityLabel.setText(String.valueOf(newQuantity)); // Update the amount on the screen
+            System.out.println(itemName + " quantity: " + newQuantity);
         }
     }
 
     @FXML
     private void handleDone() {
         if (orderQuantities.isEmpty()) {
-            System.out.println("Sipariş bulunmuyor.");
+            System.out.println("No order.");
             return;
         }
 
         try {
-            int tableNumber = WaiterScreenController.tableNum; // Örnek masa numarası
-            int waiterId = User.getWaiterId();  // Örnek garson ID'si
+            int tableNumber = WaiterScreenController.tableNum;
+            int waiterId = User.getWaiterId(); 
             String status = "Pending";
 
             String[] items = orderQuantities.keySet().toArray(new String[0]);
@@ -177,38 +175,38 @@ public class WaiterTableOrderController {
             stmt1.setArray(5, connection.createArrayOf("text", items));
 
             stmt1.executeUpdate();
-            System.out.println("Sipariş başarıyla kaydedildi!");
+            System.out.println("Order saved successfully!");
 
-            // Sol paneli güncelle
+            // Refresh the left panel
             refreshOrdersList(tableNumber);
 
-            // Siparişleri sıfırla
+            // Reset the orders.
             orderQuantities.clear();
             resetMenuQuantities();
 
         } catch (SQLException e) {
-            System.out.println("Sipariş eklerken hata oluştu: " + e.getMessage());
+            System.out.println("An error occurred while adding an order.: " + e.getMessage());
         }
     }
 
     private void refreshOrdersList(int tableNumber) {
-        loadOrdersForTable(tableNumber); // Var olan metodu çağırarak listeyi yenile
+        loadOrdersForTable(tableNumber);
     }
 
-    // Menüdeki miktar etiketlerini sıfırla
+    // Reset quantity labels in menu
     private void resetMenuQuantities() {
         for (javafx.scene.Node node : menuBox.getChildren()) {
             if (node instanceof HBox hBox) {
                 for (javafx.scene.Node child : hBox.getChildren()) {
                     if (child instanceof Label label && isNumeric(label.getText())) {
-                        label.setText("0"); // Miktar etiketini sıfırla
+                        label.setText("0"); 
                     }
                 }
             }
         }
     }
 
-    // Label'ın miktar olduğunu kontrol eden yardımcı metot
+    // Helper method that checks if the label is a quantity
     private boolean isNumeric(String str) {
         try {
             Integer.parseInt(str);
@@ -223,24 +221,24 @@ public class WaiterTableOrderController {
         try {
             int tableNumber = WaiterScreenController.tableNum;
 
-            // Veritabanından masaya ait siparişleri sil
+            // Delete orders belonging to table from database
             String query = "DELETE FROM public.\"Orders\" WHERE table_number = ?";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, tableNumber);
             int rowsDeleted = stmt.executeUpdate();
 
             if (rowsDeleted > 0) {
-                System.out.println("Masa " + tableNumber + " başarıyla kapatıldı!");
+                System.out.println("Table " + tableNumber + " closed successfully!");
             } else {
-                System.out.println("Bu masaya ait sipariş bulunamadı.");
+                System.out.println("No order found for this table.");
             }
 
-            // Sol tarafı sıfırla
+            // Reset the left panel.
             ordersListView.getItems().clear();
             totalPriceLabel.setText("Total: 0.00 TL");
 
         } catch (SQLException e) {
-            System.out.println("Masayı kapatırken hata oluştu: " + e.getMessage());
+            System.out.println("Error closing table: " + e.getMessage());
         }
     }
 

@@ -24,7 +24,7 @@ public class RemoveController {
     
     @FXML
     private void deleteData() {
-        // Kullanıcı adı ve şifreyi al
+        // Get username and password
         String _username = username.getText();
         String _password = password.getText();
 
@@ -33,7 +33,7 @@ public class RemoveController {
             return;
         }
 
-        // Kullanıcıyı silme işlemi
+        // Deleting a user
         boolean success = userService.removeUser(_username, _password);
 
         if (success) {
@@ -42,7 +42,6 @@ public class RemoveController {
         	AlertHelper.showAlert(AlertType.ERROR, "Hata", "Kullanıcı adı veya şifre hatalı.");
         }
 
-        // Alanları temizle
         username.clear();
         password.clear();
     }

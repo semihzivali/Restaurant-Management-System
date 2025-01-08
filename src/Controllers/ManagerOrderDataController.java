@@ -27,14 +27,14 @@ public class ManagerOrderDataController {
     private Button backButton;
 
     @FXML
-    private Label totalSalesLabel; // Toplam satışları göstermek için Label
+    private Label totalSalesLabel; 
 
     private final SalesReportService salesReportService = new SalesReportService();
     private ObservableList<SalesReport> salesReportData = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
-        // Tabloyu verilerle doldur
+        // Fill the table with data
         waiterNameColumn.setCellValueFactory(cellData -> cellData.getValue().getWaiterNameProperty());
         totalSalesColumn.setCellValueFactory(cellData -> cellData.getValue().getTotalSalesProperty().asObject());
 
@@ -47,8 +47,8 @@ public class ManagerOrderDataController {
         salesReportData.addAll(salesReportService.getSalesReportData());
         salesReportTable.setItems(salesReportData);
 
-        // Tüm garsonların toplam satışını hesapla
-        double totalSales = salesReportService.getTotalSales(); // Bu metodu SalesReportService'de yazıyoruz
+        // Calculate total sales of all waiters
+        double totalSales = salesReportService.getTotalSales();
         totalSalesLabel.setText("Total Sales: " + totalSales);
     }
     

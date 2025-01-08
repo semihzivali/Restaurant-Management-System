@@ -12,7 +12,7 @@ public class SceneManager {
     private Stage primaryStage;
 
     private SceneManager() {
-        // Singleton için private constructor
+     
     }
 
     public static SceneManager getInstance() {
@@ -34,7 +34,7 @@ public class SceneManager {
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
-            e.printStackTrace(); // Daha iyi hata yönetimi eklenebilir
+            e.printStackTrace();
         }
     }
 	

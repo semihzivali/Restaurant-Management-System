@@ -30,17 +30,13 @@ public class ManagerLoginController {
     
     @FXML
     private void checkLogin(ActionEvent event) {
-        // Kullanıcı adı ve şifreyi alıyoruz
         String username = manager_username.getText();
         String password = manager_password.getText();
         
-        // Veritabanında kullanıcıyı kontrol ediyoruz
-    if (userService.getUserId(username, password, "manager") != -1) {
-            // Eğer kullanıcı doğruysa, ana sayfaya geçiş yapılabilir.
+    if (userService.getUserId(username, password, "manager") != -1) {      
             System.out.println("Login successful!");
             SceneManager.getInstance().changeScene("/Views/ManagerScreen.fxml");
         } else {
-            // Kullanıcı adı veya şifre yanlışsa hata mesajı gösterme
             System.out.println("Invalid username or password.");
             AlertHelper.showAlert(AlertType.ERROR, "Login Failed", "Invalid username or password.");
         }
