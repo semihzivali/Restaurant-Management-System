@@ -11,37 +11,48 @@ import java.util.List;
 
 public class MenuRepository {
 
-    public List<Menu> getAllMenuItems() {
-        List<Menu> menuItems = new ArrayList<>();
-        try (Connection conn = DataBaseConnection.getConnection()) {
-            String query = "SELECT * FROM \"Menu\"";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+	public List<Menu> getAllMenuItems() {
+	    List<Menu> menuItems = new ArrayList<>();
+	    try (Connection conn = DataBaseConnection.getConnection()) {
+	        String query = "SELECT * FROM \"Menu\"";
+	        PreparedStatement stmt = conn.prepareStatement(query);
+	        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                menuItems.add(new Menu(
-                        rs.getInt("id"),
-                        rs.getString("item_name"),
-                        rs.getDouble("price"),
-                        rs.getInt("category_id"),
-                        rs.getInt("stock_quantity")
-                ));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return menuItems;
-    }
+	        while (rs.next()) {
+	            Menu menu = new Menu(
+	                    rs.getString("item_name"),
+	                    rs.getDouble("price"),
+	                    rs.getInt("category_id"),
+	                    rs.getInt("stock_quantity")
+	            );
+	            menu.setId(rs.getInt("id")); // ID'yi setId() ile ayarlıyoruz
+	            menuItems.add(menu);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return menuItems;
+	}
 
     public void addMenuItem(Menu menuItem) {
         try (Connection conn = DataBaseConnection.getConnection()) {
             String query = "INSERT INTO \"Menu\" (item_name, price, category_id, stock_quantity) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            PreparedStatement stmt = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            
             stmt.setString(1, menuItem.getItemName());
             stmt.setDouble(2, menuItem.getPrice());
             stmt.setInt(3, menuItem.getCategoryId());
             stmt.setInt(4, menuItem.getStockQuantity());
-            stmt.executeUpdate();
+            
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        menuItem.setId(generatedKeys.getInt(1)); // Yeni ID'yi al ve menüye ata
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -55,7 +66,7 @@ public class MenuRepository {
             stmt.setDouble(2, menuItem.getPrice());
             stmt.setInt(3, menuItem.getCategoryId());
             stmt.setInt(4, menuItem.getStockQuantity());
-            stmt.setInt(5, menuItem.getId());
+            stmt.setInt(5, menuItem.getId()); // ID ile güncelleme
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();

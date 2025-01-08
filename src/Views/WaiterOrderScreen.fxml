@@ -13,7 +13,9 @@
         <VBox alignment="TOP_LEFT" prefWidth="200" spacing="10">
             <Label style="-fx-font-size: 16px;" text="Orders" />
             <ListView fx:id="ordersListView" prefHeight="509.0" prefWidth="179.0" />
-         <Button fx:id="back_button" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #FED700;" text="Back" />
+            <Label fx:id="totalPriceLabel" style="-fx-font-size: 14px;" text="Total: 0.00 TL" />
+            <Button fx:id="closeTableButton" mnemonicParsing="false" onAction="#closeTable" style="-fx-background-color: #FF4D4D;" text="Close Table" />
+            <Button fx:id="back_button" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #FED700;" text="Back" />
         </VBox>
 
         <!-- Add Order Panel -->

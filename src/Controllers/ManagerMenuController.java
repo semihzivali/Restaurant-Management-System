@@ -6,6 +6,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 
 public class ManagerMenuController {
 
@@ -28,6 +30,9 @@ public class ManagerMenuController {
     private TableColumn<Menu, Integer> stockQuantityColumn;
 
     @FXML
+    private TableColumn<Menu, Void> actionColumn;
+
+    @FXML
     private TextField itemNameField;
 
     @FXML
@@ -42,28 +47,34 @@ public class ManagerMenuController {
     @FXML
     private Button addButton;
 
-    @FXML
-    private Button updateButton;
-
-    @FXML
-    private Button deleteButton;
-
-    private final MenuService menuService = new MenuService(); // Service katmanına erişim
+    private final MenuService menuService = new MenuService();
     private ObservableList<Menu> menuData = FXCollections.observableArrayList();
+
+    private Menu selectedMenuForEdit; // Edit işleminde düzenlenen öğeyi takip eder
 
     @FXML
     public void initialize() {
-      //  idColumn.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        //itemNameColumn.setCellValueFactory(cellData -> cellData.getValue().itemNameProperty());
-        //priceColumn.setCellValueFactory(cellData -> cellData.getValue().priceProperty().asObject());
-        //categoryColumn.setCellValueFactory(cellData -> cellData.getValue().categoryIdProperty().asObject());
-        //stockQuantityColumn.setCellValueFactory(cellData -> cellData.getValue().stockQuantityProperty().asObject());
+        // Sütunların bağlanması
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("itemName"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryId"));
+        stockQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("stockQuantity"));
 
+        // Verilerin yüklenmesi
         loadMenuData();
 
-        addButton.setOnAction(event -> addMenu());
-        updateButton.setOnAction(event -> updateMenu());
-        deleteButton.setOnAction(event -> deleteMenu());
+        // Action sütununun eklenmesi
+        addActionButtons();
+
+        // Add butonuna tıklama işlemi
+        addButton.setOnAction(event -> {
+            if (selectedMenuForEdit == null) {
+                addMenu();
+            } else {
+                updateMenu();
+            }
+        });
     }
 
     private void loadMenuData() {
@@ -72,36 +83,80 @@ public class ManagerMenuController {
         menuTable.setItems(menuData);
     }
 
+    private void addActionButtons() {
+        actionColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button editButton = new Button("Edit");
+            private final Button deleteButton = new Button("Delete");
+
+            {
+                editButton.setOnAction(event -> {
+                    Menu selectedItem = getTableView().getItems().get(getIndex());
+                    populateFieldsForEdit(selectedItem);
+                });
+
+                deleteButton.setOnAction(event -> {
+                    Menu selectedItem = getTableView().getItems().get(getIndex());
+                    deleteMenu(selectedItem);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    HBox actionBox = new HBox(10, editButton, deleteButton);
+                    setGraphic(actionBox);
+                }
+            }
+        });
+    }
+
+    private void populateFieldsForEdit(Menu menu) {
+        selectedMenuForEdit = menu; // Düzenlenecek öğeyi takip et
+        itemNameField.setText(menu.getItemName());
+        priceField.setText(String.valueOf(menu.getPrice()));
+        categoryIdField.setText(String.valueOf(menu.getCategoryId()));
+        stockQuantityField.setText(String.valueOf(menu.getStockQuantity()));
+        addButton.setText("Update"); // Buton metnini değiştir
+    }
+
     private void addMenu() {
-        Menu Menu = new Menu(
-                0, // ID veritabanı tarafından atanır
+        Menu menu = new Menu(
+        		
                 itemNameField.getText(),
                 Double.parseDouble(priceField.getText()),
                 Integer.parseInt(categoryIdField.getText()),
                 Integer.parseInt(stockQuantityField.getText())
         );
-        menuService.addMenuItem(Menu);
+        menuService.addMenuItem(menu);
+        clearFields();
         loadMenuData();
     }
 
     private void updateMenu() {
-        Menu selectedItem = menuTable.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            selectedItem.setItemName(itemNameField.getText());
-            selectedItem.setPrice(Double.parseDouble(priceField.getText()));
-            selectedItem.setCategoryId(Integer.parseInt(categoryIdField.getText()));
-            selectedItem.setStockQuantity(Integer.parseInt(stockQuantityField.getText()));
+        selectedMenuForEdit.setItemName(itemNameField.getText());
+        selectedMenuForEdit.setPrice(Double.parseDouble(priceField.getText()));
+        selectedMenuForEdit.setCategoryId(Integer.parseInt(categoryIdField.getText()));
+        selectedMenuForEdit.setStockQuantity(Integer.parseInt(stockQuantityField.getText()));
 
-            menuService.updateMenuItem(selectedItem);
-            loadMenuData();
-        }
+        menuService.updateMenuItem(selectedMenuForEdit); // Veritabanında güncelle
+        clearFields();
+        loadMenuData();
+        addButton.setText("Add"); // Butonu eski haline döndür
+        selectedMenuForEdit = null; // Edit işlemi tamamlandı
     }
 
-    private void deleteMenu() {
-        Menu selectedItem = menuTable.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            menuService.deleteMenuItem(selectedItem.getId());
-            loadMenuData();
-        }
+    private void deleteMenu(Menu menu) {
+        menuService.deleteMenuItem(menu.getId());
+        loadMenuData();
+    }
+
+    private void clearFields() {
+        itemNameField.clear();
+        priceField.clear();
+        categoryIdField.clear();
+        stockQuantityField.clear();
     }
 }
