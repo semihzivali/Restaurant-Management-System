@@ -30,12 +30,12 @@ public class OrderRepository {
         }
     }
 
-    // Siparişleri almak
+    // Getting orders
     public List<Order> getOrdersByTable(int tableNumber) {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * FROM \"Orders\" WHERE table_number = ?";
 
-        try (Connection con = dbConnection.getConnection();  // DataBaseConnection'ı kullanıyoruz
+        try (Connection con = dbConnection.getConnection();  // We use the database connection class
              PreparedStatement pst = con.prepareStatement(query)) {
 
             pst.setInt(1, tableNumber);

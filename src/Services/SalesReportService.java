@@ -13,7 +13,7 @@ public class SalesReportService {
         return salesReportRepository.getSalesReportData();
     }
 
-    // Toplam satışları hesaplayan metod
+   
     public double getTotalSales() {
         return salesReportRepository.getTotalSales();
     }
