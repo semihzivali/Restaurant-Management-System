@@ -29,6 +29,11 @@ public class MenuService {
     }
 
     public void deleteMenuItem(int id) {
-        menuRepository.deleteMenuItem(id);
+    	if ( id > 0) {
+    		menuRepository.deleteMenuItem(id);
+        } else {
+            throw new IllegalArgumentException("Invalid id: " + id);
+        }
     }
+    
 }

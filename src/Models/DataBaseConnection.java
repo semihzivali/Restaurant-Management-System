@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class DataBaseConnection {
 
-	private static final String URL = "jdbc:postgresql://localhost:5432/JavaProject";
-	private static final String USER = "postgres";
-	private static final String PASSWORD = "semih0902";
+	private static final String URL = "jdbc:postgresql://localhost:5432/your_project_name";
+	private static final String USER = "your_username";
+	private static final String PASSWORD = "your_password";
 
 	public static Connection getConnection() {
 		Connection connection = null;
