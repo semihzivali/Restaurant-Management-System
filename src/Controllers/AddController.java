@@ -1,6 +1,6 @@
 package Controllers;
 
-import Services.UserService;
+import Services.Abstract.IUserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Alert.AlertType;
 import Utils.AlertHelper;
-import application.SceneManager;
+import Utils.SceneManager;
 
 public class AddController {
 
@@ -23,7 +23,10 @@ public class AddController {
     @FXML
     private ComboBox<String> select_user_type;
 
-    private UserService userService= new UserService();
+    private IUserService userService;
+    public AddController(IUserService _userService) {
+    	userService = _userService;
+    }
 
     @FXML
     public void initialize() {
@@ -43,7 +46,7 @@ public class AddController {
         }
 
         // Insert the database.
-        boolean success = userService.writeToDatabase(user, pass, userType);
+        boolean success = userService.addUser(user, pass, userType);
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Success", "User added successfully!");

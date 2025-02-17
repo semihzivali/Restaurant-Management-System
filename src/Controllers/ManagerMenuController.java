@@ -1,8 +1,8 @@
 package Controllers;
 
 import Models.Menu;
-import Services.MenuService;
-import application.SceneManager;
+import Services.Abstract.IMenuService;
+import Utils.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,8 +50,12 @@ public class ManagerMenuController {
     private Button addButton;
     @FXML
     private Button back_button;
-
-    private final MenuService menuService = new MenuService();
+    
+    private IMenuService menuService;
+    public ManagerMenuController(IMenuService _menuService) {
+    	menuService = _menuService;
+    }
+    
     private ObservableList<Menu> menuData = FXCollections.observableArrayList();
 
     private Menu selectedMenuForEdit; // Keeps track of the edited item during the edit process

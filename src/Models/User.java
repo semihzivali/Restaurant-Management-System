@@ -15,7 +15,7 @@ public class User {
 	        this.role = role;
 	    }
 	    
-	    public static void setWaiterId(int id) {
+	    public static void setWaiterId(int id) {	// Use for keeping waiter id.
 	    	userId = id;
 	    }
 

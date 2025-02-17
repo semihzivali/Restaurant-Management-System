@@ -1,4 +1,4 @@
-package Repository;
+package Repository.Concrete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Models.DataBaseConnection;
+import Repository.Abstract.IUserRepository;
 
-public class UserRepository {
+public class UserRepository implements IUserRepository {
 
     public boolean removeUser(String username, String password) {
         String query = "DELETE FROM \"Users\" WHERE username = ? AND password = ?";
@@ -48,7 +49,7 @@ public class UserRepository {
         }
     }
 
-    public boolean writeToDatabase(String userName, String userPassword, String userRole) {
+    public boolean addUser(String userName, String userPassword, String userRole) {
         String query = "INSERT INTO \"Users\"(username, password, role) VALUES(?, ?, ?)";
 
         try (Connection con = DataBaseConnection.getConnection();

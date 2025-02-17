@@ -1,7 +1,8 @@
-package Repository;
+package Repository.Concrete;
 
 import Models.DataBaseConnection;
 import Models.Menu;
+import Repository.Abstract.IMenuRepository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuRepository {
+public class MenuRepository implements IMenuRepository {
 
 	public List<Menu> getAllMenuItems() {
 	    List<Menu> menuItems = new ArrayList<>();

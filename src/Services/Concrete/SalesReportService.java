@@ -1,7 +1,7 @@
-package Services;
+package Services.Concrete;
 
 import Models.SalesReport;
-import Repository.SalesReportRepository;
+import Repository.Concrete.SalesReportRepository;
 
 import java.util.List;
 

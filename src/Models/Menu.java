@@ -9,7 +9,6 @@ public class Menu {
 
     // Constructor
     public Menu( String itemName, double price, int categoryId, int stockQuantity) {
-        //this.id = id;
         this.itemName = itemName;
         this.price = price;
         this.categoryId = categoryId;

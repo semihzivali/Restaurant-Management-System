@@ -1,4 +1,4 @@
-package Repository;
+package Repository.Concrete;
 
 import Models.SalesReport;
 import Models.DataBaseConnection;
