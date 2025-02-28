@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10" style="-fx-padding: 20;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ManagerMenuController">
+
+    <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Manage Menu" />
+
+    <TableView fx:id="menuTable" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="idColumn" prefWidth="50" text="ID" />
+            <TableColumn fx:id="itemNameColumn" prefWidth="150" text="Item Name" />
+            <TableColumn fx:id="priceColumn" prefWidth="100" text="Price" />
+            <TableColumn fx:id="categoryColumn" prefWidth="100" text="Category Id" />
+            <TableColumn fx:id="stockQuantityColumn" prefWidth="100" text="Quantity" />
+            <TableColumn fx:id="actionColumn" prefWidth="100" text="Actions" />
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER" spacing="10">
+        <Label text="Item Name" />
+        <TextField fx:id="itemNameField" prefWidth="150" />
+        <Label text="Price" />
+        <TextField fx:id="priceField" prefWidth="100" />
+        <Label text="Category Id" />
+        <TextField fx:id="categoryIdField" prefWidth="100" />
+        <Label text="Stock Quantity" />
+        <TextField fx:id="stockQuantityField" prefWidth="100" />
+    </HBox>
+
+    <Button fx:id="addButton" text="Add" />
+   <Button fx:id="back_button" mnemonicParsing="false" onAction="#back" style="-fx-background-color: #FED700;" text="Back" />
+
+</VBox>
