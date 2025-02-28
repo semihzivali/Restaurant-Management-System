@@ -18,6 +18,15 @@ public class MenuService implements IMenuService {
     public List<Menu> getAllMenuItems() {
         return menuRepository.getAllMenuItems();
     }
+    
+    @Override
+    public Menu getMenuItemById(int id) {
+        if (id > 0) {
+            return menuRepository.getMenuItemById(id);
+        } else {
+            throw new IllegalArgumentException("Invalid id: " + id);
+        }
+    }
 
     @Override
     public void addMenuItem(Menu menuItem) {

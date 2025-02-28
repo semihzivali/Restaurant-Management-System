@@ -1,8 +1,8 @@
 package Controllers;
 
-import Services.UserService;
+import Services.Abstract.IUserService;
 import Utils.AlertHelper;
-import application.SceneManager;
+import Utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,7 +20,10 @@ public class ManagerSignupController {
     @FXML
     private TextField manager_password;
     
-    private UserService userService= new UserService();
+    private IUserService userService;
+    public ManagerSignupController(IUserService _userService) {
+    	this.userService = _userService;
+    }
     
     
     @FXML
@@ -34,7 +37,7 @@ public class ManagerSignupController {
         }
 
         // Insert the database.
-        boolean success = userService.writeToDatabase(username, password, "manager");
+        boolean success = userService.addUser(username, password, "manager");
 
         if (success) {
             AlertHelper.showAlert(AlertType.INFORMATION, "Success", "User added successfully!");

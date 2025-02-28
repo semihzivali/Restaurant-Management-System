@@ -1,8 +1,8 @@
 package Controllers;
 
 import Utils.AlertHelper;
-import Services.UserService;
-import application.SceneManager;
+import Services.Abstract.IUserService;
+import Utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,7 +20,10 @@ public class RemoveController {
     @FXML
     private TextField password;
     
-    private UserService userService= new UserService();
+    private IUserService userService;
+    public RemoveController(IUserService _userService) {
+    	this.userService = _userService;
+    }
     
     @FXML
     private void deleteData() {

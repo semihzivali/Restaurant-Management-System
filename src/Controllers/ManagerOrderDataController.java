@@ -1,8 +1,8 @@
 package Controllers;
 
 import Models.SalesReport;
-import Services.SalesReportService;
-import application.SceneManager;
+import Services.Abstract.ISalesReportService;
+import Utils.SceneManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,7 +29,11 @@ public class ManagerOrderDataController {
     @FXML
     private Label totalSalesLabel; 
 
-    private final SalesReportService salesReportService = new SalesReportService();
+    private ISalesReportService salesReportService;
+    public ManagerOrderDataController(ISalesReportService _salesReportService) {
+    	this.salesReportService = _salesReportService;
+    }
+    
     private ObservableList<SalesReport> salesReportData = FXCollections.observableArrayList();
 
     @FXML

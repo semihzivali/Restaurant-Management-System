@@ -1,7 +1,6 @@
 package Controllers;
 
-import Services.UserService;
-import application.SceneManager;
+import Utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -9,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import Utils.AlertHelper;
 import Models.User;
+import Services.Abstract.IUserService;
 
 public class WaiterLoginController {
     
@@ -21,7 +21,10 @@ public class WaiterLoginController {
     @FXML
     private TextField waiter_password;
     
-    private UserService userService= new UserService();
+    private IUserService userService;
+    public WaiterLoginController(IUserService _userService) {
+    	this.userService = _userService;
+    }
     
     @FXML
     private void checkLogin(ActionEvent event) {

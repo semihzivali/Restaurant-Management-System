@@ -3,7 +3,7 @@ package Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
-import application.SceneManager;
+import Utils.SceneManager;
 
 public class FirstScreenController {
 

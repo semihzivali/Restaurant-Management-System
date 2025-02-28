@@ -1,6 +1,6 @@
 package Controllers;
 
-import application.SceneManager;
+import Utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.Order;
 import Models.User;
 import Services.Abstract.IMenuService;
 import Services.Abstract.IOrderService;
@@ -32,10 +31,9 @@ public class WaiterTableOrderController {
     private IOrderService orderService;
     private IMenuService menuService;
 
-    // Constructor injection of services
-    public WaiterTableOrderController(IOrderService _orderService, IMenuService _menuService) {
+    public WaiterTableOrderController(IOrderService _orderService, IMenuService _menuRepository) {
         this.orderService = _orderService;
-        this.menuService = _menuService;
+        this.menuService = _menuRepository;
     }
 
     @FXML
@@ -44,7 +42,6 @@ public class WaiterTableOrderController {
         loadOrdersForTable(WaiterScreenController.tableNum);
     }
 
-    // Load menu from menuService
     private void loadMenu() {
         var menuItems = menuService.getAllMenuItems();
 
@@ -56,7 +53,6 @@ public class WaiterTableOrderController {
             Label quantityLabel = new Label("0");
             Button plusButton = new Button("+");
 
-            // Button functions
             minusButton.setOnAction(event -> updateQuantity(item.getItemName(), quantityLabel, -1));
             plusButton.setOnAction(event -> updateQuantity(item.getItemName(), quantityLabel, 1));
 
@@ -65,7 +61,6 @@ public class WaiterTableOrderController {
         }
     }
 
-    // Load orders for the table from orderService
     private void loadOrdersForTable(int tableNumber) {
         var orders = orderService.getOrdersByTable(tableNumber);
         ordersListView.getItems().clear();
@@ -73,27 +68,27 @@ public class WaiterTableOrderController {
         double totalPrice = 0.0;
 
         for (var order : orders) {
-            String[] items = order.getItems().split(",");
-            Integer[] quantities = order.getQuantities().split(",");
+            String[] items = order.getItems();
+            int[] quantities = order.getQuantities();
 
             for (int i = 0; i < items.length; i++) {
-                ordersListView.getItems().add(quantities[i] + " x " + items[i]);
-                totalPrice += Integer.parseInt(quantities[i]) * menuService.getItemPrice(items[i]);
+                var menuItem = menuService.getMenuItemById(Integer.parseInt(items[i]));
+                if (menuItem != null) {
+                    ordersListView.getItems().add(quantities[i] + " x " + menuItem.getItemName());
+                    totalPrice += quantities[i] * menuItem.getPrice();
+                }
             }
         }
-
+        
         totalPriceLabel.setText(String.format("Total: %.2f TL", totalPrice));
     }
 
-    // Update quantity of the menu item
     private void updateQuantity(String itemName, Label quantityLabel, int change) {
         int currentQuantity = orderQuantities.getOrDefault(itemName, 0);
-        int newQuantity = currentQuantity + change;
-
-        if (newQuantity >= 0) {
-            orderQuantities.put(itemName, newQuantity);
-            quantityLabel.setText(String.valueOf(newQuantity));
-        }
+        int newQuantity = Math.max(0, currentQuantity + change);
+        
+        orderQuantities.put(itemName, newQuantity);
+        quantityLabel.setText(String.valueOf(newQuantity));
     }
 
     @FXML
@@ -109,23 +104,20 @@ public class WaiterTableOrderController {
             String status = "Pending";
 
             String[] items = orderQuantities.keySet().toArray(new String[0]);
-            int[] quantities = orderQuantities.values().toArray(new int[0]);
+            int[] quantities = orderQuantities.values().stream().mapToInt(Integer::intValue).toArray();
 
-            orderService.createOrder(new Order(tableNumber, items, quantities, status, waiterId));
-
+            orderService.createOrder(tableNumber, items, status, waiterId, quantities);
+            
             System.out.println("Order saved successfully!");
-
             refreshOrdersList(tableNumber);
-
             orderQuantities.clear();
             resetMenuQuantities();
 
         } catch (Exception e) {
-            System.out.println("An error occurred while adding an order.: " + e.getMessage());
+            System.out.println("An error occurred while adding an order: " + e.getMessage());
         }
     }
 
-    // Close the table and delete the order
     @FXML
     private void closeTable() {
         try {

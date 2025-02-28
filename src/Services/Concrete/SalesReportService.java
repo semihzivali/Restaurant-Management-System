@@ -1,18 +1,22 @@
 package Services.Concrete;
 
 import Models.SalesReport;
-import Repository.Concrete.SalesReportRepository;
+import Repository.Abstract.ISalesReportRepository;
+import Services.Abstract.ISalesReportService;
 
 import java.util.List;
 
-public class SalesReportService {
+public class SalesReportService implements ISalesReportService{
 
-    private final SalesReportRepository salesReportRepository = new SalesReportRepository();
+	private final ISalesReportRepository salesReportRepository;
+	
+    public SalesReportService(ISalesReportRepository _salesReportRepository) {
+        this.salesReportRepository = _salesReportRepository;
+    }
 
     public List<SalesReport> getSalesReportData() {
         return salesReportRepository.getSalesReportData();
     }
-
    
     public double getTotalSales() {
         return salesReportRepository.getTotalSales();

@@ -1,8 +1,8 @@
 package Controllers;
 
-import Services.UserService;
+import Services.Abstract.IUserService;
 import Utils.AlertHelper;
-import application.SceneManager;
+import Utils.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -22,7 +22,10 @@ public class ManagerLoginController {
     @FXML
     private TextField manager_password;
     
-    private UserService userService= new UserService();
+    private IUserService userService;
+    public ManagerLoginController(IUserService _userService) {
+    	this.userService = _userService;
+    }
     
     public void ManagerSignupController(ActionEvent event) {
         SceneManager.getInstance().changeScene("/Views/ManagerSignup.fxml");

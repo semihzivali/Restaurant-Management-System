@@ -34,6 +34,29 @@ public class MenuRepository implements IMenuRepository {
 	    }
 	    return menuItems;
 	}
+	
+	 public Menu getMenuItemById(int id) {
+	        Menu menu = null;
+	        try (Connection conn = DataBaseConnection.getConnection()) {
+	            String query = "SELECT * FROM \"Menu\" WHERE id = ?";
+	            PreparedStatement stmt = conn.prepareStatement(query);
+	            stmt.setInt(1, id);
+	            ResultSet rs = stmt.executeQuery();
+
+	            if (rs.next()) {
+	                menu = new Menu(
+	                        rs.getString("item_name"),
+	                        rs.getDouble("price"),
+	                        rs.getInt("category_id"),
+	                        rs.getInt("stock_quantity")
+	                );
+	                menu.setId(rs.getInt("id"));
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return menu;
+	    }
 
     public void addMenuItem(Menu menuItem) {
         try (Connection conn = DataBaseConnection.getConnection()) {

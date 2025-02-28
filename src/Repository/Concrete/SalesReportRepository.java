@@ -1,6 +1,7 @@
 package Repository.Concrete;
 
 import Models.SalesReport;
+import Repository.Abstract.ISalesReportRepository;
 import Models.DataBaseConnection;
 
 import java.sql.Connection;
@@ -9,7 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SalesReportRepository {
+public class SalesReportRepository implements ISalesReportRepository{
 
     // Method that brings sales reports
     public List<SalesReport> getSalesReportData() {
